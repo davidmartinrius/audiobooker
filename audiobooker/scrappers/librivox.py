@@ -59,7 +59,8 @@ class Librivox(AudioBookSource):
               ("limit=" + str(limit) + "offset=" + str(offset) + "&extended=1")
         json_data = session.get(url).json()['books']
         for k in json_data:
-            yield LibrivoxAudioBook(from_data=json_data[k])
+            if isinstance(k, int):
+                yield LibrivoxAudioBook(from_data=json_data[k])
 
     @classmethod
     def get_audiobook(cls, book_id):
